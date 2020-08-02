@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.dao.mapper.UserDao">
+    <insert id="addUser" parameterType="org.example.dao.bean.User" useGeneratedKeys="true" keyProperty="user_id">
+        INSERT INTO `mysql_tester`.`user`
+        (`type`,
+        `status`,
+        `create_user_id`,
+        `last_modify_user_id`,
+        `is_deleted`)
+        VALUES
+        (#{type},
+        #{status},
+        #{create_user_id},
+        #{last_modify_user_id},
+        #{is_deleted})
+    </insert>
+    <update id="updateUser" parameterType="org.example.dao.bean.User" flushCache="true">
+        UPDATE user SET type = #{type}, status = #{status} WHERE user_id = #{user_id}
+    </update>
+    <delete id="deleteUser"></delete>
+    <select id="getUserList" resultType="MyUser">
+        SELECT * FROM user limit 10
+    </select>
+    <select id="findById" resultType="user" parameterType="long">
+        SELECT * FROM user WHERE user_id = #{userId}
+    </select>
+
+    <select id="getUserByPage" resultType="MyUser">
+        SELECT * FROM user
+    </select>
+    <select id="getUserByPage1" resultType="org.example.dao.bean.User">
+        SELECT * FROM user
+    </select>
+    <select id="findUserMap" resultType="java.util.Map">
+        SELECT * FROM user
+    </select>
+    <select id="getUserAndStoresById" resultMap="UserAndStores">
+        SELECT u.user_id as user_id,u.type as user_type,u.status as user_status,u.create_time as user_create_time,
+        s.store_id as store_id,s.type as store_type,s.status as store_status
+         FROM user u,store s WHERE u.user_id = #{userId} and u.user_id = s.user_id
+    </select>
+    <resultMap id="UserAndStores" type="UserWithStore">
+        <result property="type" column="user_type"/>
+        <result property="status" column="user_status"/>
+        <result property="create_time" column="user_create_time"/>
+        <collection property="storeList" ofType="Store">
+            <result property="type" column="store_type"/>
+            <result property="status" column="store_status"/>
+            <result property="storeId" column="store_id"/>
+        </collection>
+    </resultMap>
+</mapper>

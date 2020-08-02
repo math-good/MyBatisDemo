@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.dao.mapper.ItemDao">
+
+    <select id="getByIdOrName" resultType="org.example.dao.bean.ItemGeneral">
+        select * from item_general
+        <where>
+            <if test="id != 0">
+                and item_general_id = #{id}
+            </if>
+            <if test="name != null">
+                and item_name = #{name}
+            </if>
+        </where>
+    </select>
+</mapper>

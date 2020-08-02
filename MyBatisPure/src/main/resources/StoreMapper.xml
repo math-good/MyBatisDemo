@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.dao.mapper.StoreDao">
+
+    <select id="getById" resultMap="StoreWithUser">
+        select * from store where store_id = #{id}
+    </select>
+
+    <select id="getUser" resultType="User">
+        select * from user where user_id = #{id}
+    </select>
+
+    <resultMap id="StoreWithUser" type="Store">
+        <result property="userId" column="user_id"/>
+        <result property="storeId" column="store_id"/>
+        <association property="user" column="user_id" javaType="User" select="getUser"/>
+    </resultMap>
+</mapper>
