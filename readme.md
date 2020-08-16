@@ -384,9 +384,20 @@ script
   readOnly="true"/>
 ```
 
+#### 延迟加载
+
+> 针对对象关联
+
+全局配置开启lazyLoadingEnabled（默认值为false）：
+```xml
+  <setting name="lazyLoadingEnabled" value="true"/>
+```
+
 #### 生成器
 
 http://mybatis.org/generator/
+
+
 
 #### MyBatisPlus
 
